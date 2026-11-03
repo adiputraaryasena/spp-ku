@@ -100,7 +100,7 @@
                         <button class="btn btn-lg btn-success" type="submit">Konfirmasi pengembalian</button>
                         <a class="btn btn-lg btn-ghost" target="_blank"
                            href="{{ route('admin.pengembalian.kuitansi', $ditemukan) }}">
-                            @include('partials.icon', ['name' => 'printer', 'size' => 17]) Cetak kuitansi
+                            @include('partials.icon', ['name' => 'printer', 'size' => 17]) Cetak bukti pengembalian
                         </a>
                     </div>
                 </form>
