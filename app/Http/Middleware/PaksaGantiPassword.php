@@ -23,7 +23,9 @@ class PaksaGantiPassword
     {
         $user = $request->user();
 
-        if ($user && $user->pakaiKataSandiBawaan() && ! $request->routeIs(...self::DIIZINKAN)) {
+        // PERBAIKAN: Menghapus tanda titik tiga (...) sebelum self::DIIZINKAN
+        // Laravel routeIs() dapat menerima string atau array secara langsung.
+        if ($user && $user->pakaiKataSandiBawaan() && ! $request->routeIs(self::DIIZINKAN)) {
             return redirect()->route('password.wajib');
         }
 
