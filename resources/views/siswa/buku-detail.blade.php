@@ -2,7 +2,9 @@
 @section('judul', $buku->judul)
 
 @section('konten')
-    <p class="mb-2"><a href="{{ route('siswa.katalog') }}" class="small">&larr; Kembali ke katalog</a></p>
+    <div class="mb-3">
+        <a href="{{ route('siswa.katalog') }}" class="btn btn-sm btn-ghost">&larr; Kembali ke katalog</a>
+    </div>
     @php $pengguna = auth()->user(); @endphp
 
     @include('partials.errors')
