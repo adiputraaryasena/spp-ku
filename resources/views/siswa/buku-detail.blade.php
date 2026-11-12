@@ -15,7 +15,13 @@
                 <div>
                     <div class="cover-lg">
                         @if ($buku->cover)
-                            <img src="{{ asset($buku->cover) }}" alt="Sampul {{ $buku->judul }}" loading="lazy">
+                            @if(str_starts_with($buku->cover, 'data:image'))
+                                {{-- Tampilan jika gambar dari Database (Base64) --}}
+                                <img src="{{ $buku->cover }}" alt="Sampul {{ $buku->judul }}" loading="lazy" style="width: 100%; height: auto; object-fit: contain;">
+                            @else
+                                {{-- Tampilan jika gambar masih file lokal XAMPP --}}
+                                <img src="{{ asset($buku->cover) }}" alt="Sampul {{ $buku->judul }}" loading="lazy" style="width: 100%; height: auto; object-fit: contain;">
+                            @endif
                         @else
                             @include('partials.icon', ['name' => 'book', 'size' => 56, 'stroke' => 1])
                         @endif

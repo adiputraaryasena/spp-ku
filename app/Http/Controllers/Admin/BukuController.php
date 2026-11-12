@@ -8,14 +8,9 @@ use App\Models\Kategori;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
-/**
- * FR-02 — CRUD master data buku.
- * Aturan unique pada nomor_buku mencegah data ganda (masalah utama di dokumen analisis).
- */
 class BukuController extends Controller
 {
     public function index(Request $request): View
@@ -123,9 +118,12 @@ class BukuController extends Controller
         }
 
         $file = $request->file('cover');
-        $nama = Str::random(20).'.'.$file->getClientOriginalExtension();
-        $file->move(public_path('uploads/cover'), $nama);
+        
+        // Ubah file gambar menjadi string Base64 untuk disimpan di database
+        if ($file->isValid()) {
+            return 'data:' . $file->getMimeType() . ';base64,' . base64_encode(file_get_contents($file->getRealPath()));
+        }
 
-        return 'uploads/cover/'.$nama;
+        return null;
     }
 }

@@ -2,7 +2,13 @@
     <div class="book-cover">
         <span class="nomor">{{ $buku->nomor_buku }}</span>
         @if ($buku->cover)
-            <img src="{{ asset($buku->cover) }}" alt="Sampul {{ $buku->judul }}" loading="lazy">
+            @if(str_starts_with($buku->cover, 'data:image'))
+                {{-- Menampilkan gambar Base64 dari database --}}
+                <img src="{{ $buku->cover }}" alt="Sampul {{ $buku->judul }}" loading="lazy">
+            @else
+                {{-- Menampilkan gambar file lokal (XAMPP) --}}
+                <img src="{{ asset($buku->cover) }}" alt="Sampul {{ $buku->judul }}" loading="lazy">
+            @endif
         @else
             @include('partials.icon', ['name' => 'book', 'size' => 38, 'stroke' => 1.2])
         @endif
