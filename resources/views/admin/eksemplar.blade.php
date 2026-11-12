@@ -5,7 +5,11 @@
 @section('konten')
     @include('partials.errors')
 
-    <p class="mb-2"><a href="{{ route('admin.buku.index') }}" class="small">&larr; Kembali ke master data buku</a></p>
+    <div style="margin-bottom: 1rem;">
+        <a href="{{ route('admin.buku.index') }}" class="btn btn-sm btn-ghost">
+            &larr; Kembali ke master data buku
+        </a>
+    </div>
 
     <div class="grid grid-3 mb-3">
         <div class="stat">

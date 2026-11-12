@@ -38,8 +38,8 @@
             <button class="btn btn-lg btn-block" type="submit">Masuk</button>
         </form>
 
-        <div class="login-foot">
-            <a href="{{ route('siswa.katalog') }}">&larr; Lihat katalog tanpa login</a>
+        <div class="login-foot" style="margin-top: 20px;">
+            <a href="{{ route('siswa.katalog') }}" class="btn btn-sm btn-ghost">&larr; Lihat katalog tanpa login</a>
         </div>
     </div>
 @endsection
