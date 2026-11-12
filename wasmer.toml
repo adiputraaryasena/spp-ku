@@ -1,5 +1,6 @@
 [dependencies]
-"php/php" = "=8.3.4"
+# Gunakan versi spesifik yang mendukung mbstring
+"php/php" = "=8.3.400" 
 
 [fs]
 "/app/" = "."
