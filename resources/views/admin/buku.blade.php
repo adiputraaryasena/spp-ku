@@ -46,6 +46,10 @@
                             <td>{{ $buku->rak ?: '—' }}</td>
                             <td>
                                 <div class="aksi">
+                                    <a class="btn btn-sm btn-soft" href="{{ route('admin.buku.barcode', $buku) }}" target="_blank" rel="noopener"
+                                       title="Cetak barcode semua eksemplar buku ini">
+                                        @include('partials.icon', ['name' => 'printer', 'size' => 15]) Cetak barcode
+                                    </a>
                                     <a class="btn btn-sm btn-ghost" href="{{ route('admin.buku.eksemplar', $buku) }}">Kode</a>
                                     <button class="btn btn-sm btn-ghost" data-modal="modal-buku-ubah"
                                             data-isi-json="{{ json_encode([

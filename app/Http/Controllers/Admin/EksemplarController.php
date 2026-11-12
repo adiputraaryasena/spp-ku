@@ -26,6 +26,37 @@ class EksemplarController extends Controller
         return view('admin.eksemplar', compact('buku', 'eksemplars'));
     }
 
+    /**
+     * Halaman cetak barcode: isi barcode = kode eksemplar.
+     *   ?mode=lembar  -> beberapa barcode dalam satu lembar A4 (default)
+     *   ?mode=kecil   -> satu barcode per label kecil (50 x 30 mm)
+     *   ?eksemplar=ID -> cetak satu kode saja
+     * Kode berstatus nonaktif (rusak/hilang) tidak ikut dicetak, kecuali dipilih langsung.
+     */
+    public function cetakBarcode(Request $request, Buku $buku): View
+    {
+        $mode = $request->query('mode') === 'kecil' ? 'kecil' : 'lembar';
+
+        $buku->load('kategori');
+
+        $query = $buku->eksemplars();
+
+        if ($request->filled('eksemplar')) {
+            $query->whereKey((int) $request->query('eksemplar'));
+        } else {
+            $query->where('status', '!=', Eksemplar::STATUS_NONAKTIF);
+        }
+
+        $eksemplars = $query->get();
+
+        return view('cetak.barcode', [
+            'buku' => $buku,
+            'eksemplars' => $eksemplars,
+            'mode' => $mode,
+            'tunggal' => $request->filled('eksemplar'),
+        ]);
+    }
+
     public function store(Request $request, Buku $buku): RedirectResponse
     {
         $request->validate([

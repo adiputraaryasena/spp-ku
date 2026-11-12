@@ -75,6 +75,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     // Kode eksemplar per judul
     Route::get('/buku/{buku}/eksemplar', [EksemplarController::class, 'index'])->name('buku.eksemplar');
     Route::post('/buku/{buku}/eksemplar', [EksemplarController::class, 'store'])->name('buku.eksemplar.store');
+    Route::get('/buku/{buku}/barcode', [EksemplarController::class, 'cetakBarcode'])->name('buku.barcode');
     Route::put('/eksemplar/{eksemplar}', [EksemplarController::class, 'update'])->name('eksemplar.update');
     Route::delete('/eksemplar/{eksemplar}', [EksemplarController::class, 'destroy'])->name('eksemplar.destroy');
 

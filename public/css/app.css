@@ -1020,3 +1020,141 @@ details > summary { cursor: pointer; }
   .tabbar a { font-size: 10.5px; }
   .hero h1 { font-size: 19px; line-height: 27px; }
 }
+
+
+/* ==========================================================================
+   Cetak barcode eksemplar  (halaman: cetak/barcode.blade.php)
+   Barcode = vektor SVG, lebar modul dijaga ~0,34 mm agar mudah dipindai.
+   ========================================================================== */
+.bc-body { background: var(--canvas); min-height: 100vh; }
+
+/* ---- Bilah atas (tidak ikut tercetak) ---- */
+.bc-bar {
+  position: sticky; top: 0; z-index: 20;
+  background: rgba(255, 255, 255, .96);
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line-soft);
+  box-shadow: 0 6px 18px rgba(15, 23, 42, .06);
+  padding: 12px 20px 10px;
+}
+.bc-bar-inner { max-width: 1040px; margin: 0 auto; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.bc-bar-info { flex: 1 1 260px; min-width: 0; }
+.bc-back { font-size: 12.5px; font-weight: 600; }
+.bc-title { font-size: 17px; line-height: 24px; margin-top: 2px; }
+.bc-sub { font-size: 12.5px; color: var(--muted); line-height: 18px; overflow-wrap: anywhere; }
+.bc-sub strong { color: var(--ink); }
+.bc-tip { max-width: 1040px; margin: 8px auto 0; font-size: 12px; line-height: 18px; color: var(--muted); }
+.bc-tip strong { color: var(--navy-ink); }
+
+.bc-seg { display: inline-flex; gap: 4px; padding: 4px; background: var(--canvas); border: 1px solid var(--line-soft); border-radius: 12px; }
+.bc-seg a {
+  display: flex; flex-direction: column; gap: 1px; padding: 6px 14px; border-radius: 9px;
+  color: var(--ink); text-decoration: none; min-width: 150px;
+  transition: background var(--ease), color var(--ease), box-shadow var(--ease);
+}
+.bc-seg a:hover { background: #e2e8f0; }
+.bc-seg a.is-on { background: var(--navy); color: #fff; box-shadow: 0 3px 10px rgba(30, 58, 138, .28); }
+.bc-seg-t { font-size: 13px; font-weight: 700; line-height: 18px; }
+.bc-seg-s { font-size: 11px; line-height: 15px; opacity: .75; }
+.bc-print { height: 46px; padding: 0 24px; }
+
+.bc-kosong { max-width: 420px; margin: 60px auto; text-align: center; padding: 0 20px; color: var(--muted); }
+.bc-kosong .icon { color: var(--line); margin-bottom: 10px; }
+.bc-kosong h2 { color: var(--ink); font-size: 17px; margin-bottom: 4px; }
+
+/* ---- Lembar & label ---- */
+.bc-sheet { margin: 22px auto 40px; }
+.bc-lembar {
+  max-width: 210mm; padding: 8mm; background: #fff;
+  border: 1px solid var(--line-soft); border-radius: 12px; box-shadow: var(--shadow-lg);
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.bc-kecil {
+  max-width: 1040px; padding: 0 20px;
+  display: grid; grid-template-columns: repeat(auto-fill, 50mm); gap: 14px; justify-content: center;
+}
+
+.bc-label {
+  margin: 0; box-sizing: border-box; overflow: hidden;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+  color: #000; background: #fff;
+  break-inside: avoid; page-break-inside: avoid;
+  --mod: .36mm;
+}
+.bc-lembar .bc-label { height: 34mm; padding: 2mm 2.5mm; outline: .2mm dashed #b6c0cf; outline-offset: -.2mm; }
+.bc-kecil .bc-label { width: 50mm; height: 30mm; padding: 1.6mm 2mm; border: 1px solid var(--line); border-radius: 8px; box-shadow: var(--shadow); --mod: .34mm; }
+
+.bc-lib {
+  max-width: 100%; font-size: 5.6pt; line-height: 1.2; font-weight: 700; letter-spacing: .08em;
+  text-transform: uppercase; color: #334155; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.bc-svg {
+  display: block; margin: 1.2mm auto .6mm;
+  width: min(100%, calc(var(--m) * var(--mod)));
+  height: 13mm;
+}
+.bc-kecil .bc-svg { height: 11mm; margin: 1mm auto .4mm; }
+.bc-kode {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 9.5pt; line-height: 1.15; font-weight: 700; letter-spacing: .1em; max-width: 100%;
+  overflow-wrap: anywhere;
+}
+.bc-judul {
+  max-width: 100%; margin-top: .6mm; font-size: 6.2pt; line-height: 1.25; color: #334155;
+  display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden;
+}
+
+/* ---- Ponsel & layar kecil ---- */
+@media screen and (max-width: 700px) {
+  .bc-bar { padding: 10px 14px 8px; }
+  .bc-bar-inner { gap: 10px; }
+  .bc-bar-info { flex-basis: 100%; }
+  .bc-title { font-size: 16px; }
+  .bc-seg { display: grid; grid-template-columns: 1fr 1fr; width: 100%; order: 2; }
+  .bc-seg a { min-width: 0; padding: 8px 10px; }
+  .bc-seg-s { font-size: 10.5px; }
+  .bc-print { width: 100%; order: 3; height: 48px; border-radius: 12px; }
+  .bc-tip { font-size: 11.5px; }
+
+  .bc-sheet { margin: 14px auto 28px; }
+  .bc-lembar { margin: 14px 12px 28px; padding: 10px; grid-template-columns: repeat(2, minmax(0, 1fr)); border-radius: 14px; }
+  .bc-lembar .bc-label { height: auto; min-height: 34mm; padding: 10px 8px; }
+  .bc-kecil { padding: 0 12px; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; justify-content: stretch; }
+  .bc-kecil .bc-label { width: auto; height: auto; min-height: 30mm; padding: 10px 8px; }
+}
+@media screen and (max-width: 360px) {
+  .bc-lembar { grid-template-columns: minmax(0, 1fr); }
+  .bc-kecil { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* ---- Cetak ---- */
+@media print {
+  html, body, .bc-body { background: #fff !important; min-height: 0; }
+  .bc-bar, .bc-kosong { display: none !important; }
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  .bc-sheet { margin: 0; }
+  .bc-lembar { max-width: none; padding: 0; border: 0; border-radius: 0; box-shadow: none; }
+  .bc-lembar .bc-label { height: 34mm; min-height: 0; padding: 2mm 2.5mm; }
+
+  .bc-kecil { display: block; max-width: none; padding: 0; }
+  .bc-kecil .bc-label {
+    width: 50mm; height: 30mm; min-height: 0; padding: 1.6mm 2mm;
+    border: 0; border-radius: 0; box-shadow: none;
+    break-after: page; page-break-after: always;
+  }
+  .bc-kecil .bc-label:last-child { break-after: auto; page-break-after: auto; }
+}
+
+/* Tombol cetak barcode di master buku & daftar kode */
+.btn-soft { background: #e0e7ff; color: var(--navy-ink); border-color: #c7d2fe; }
+.btn-soft:hover { background: #c7d2fe; color: var(--navy-ink); border-color: #a5b4fc; }
+.aksi-head { display: flex; gap: 8px; flex-wrap: wrap; }
+@media screen and (max-width: 700px) {
+  .card-head:has(.aksi-head) { flex-wrap: wrap; }
+  .aksi-head { width: 100%; }
+  .aksi-head .btn { flex: 1 1 0; }
+  table.data td .aksi { gap: 8px; }
+  table.data td .aksi > .btn, table.data td .aksi > form { flex: 1 1 auto; }
+  table.data td .aksi > form .btn { width: 100%; }
+}

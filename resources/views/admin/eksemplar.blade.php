@@ -58,6 +58,16 @@
         <div class="card-head">
             @include('partials.icon', ['name' => 'book', 'size' => 18])
             <h2 class="grow">Daftar kode ({{ $eksemplars->count() }})</h2>
+            @if ($eksemplars->where('status', '!=', 'nonaktif')->isNotEmpty())
+                <div class="aksi-head">
+                    <a class="btn btn-sm btn-soft" href="{{ route('admin.buku.barcode', $buku) }}" target="_blank" rel="noopener">
+                        @include('partials.icon', ['name' => 'printer', 'size' => 15]) Cetak semua (A4)
+                    </a>
+                    <a class="btn btn-sm btn-ghost" href="{{ route('admin.buku.barcode', [$buku, 'mode' => 'kecil']) }}" target="_blank" rel="noopener">
+                        Label kecil
+                    </a>
+                </div>
+            @endif
         </div>
 
         @if ($eksemplars->isNotEmpty())
@@ -84,6 +94,10 @@
                                 <td>{{ $e->peminjamans_count }} transaksi</td>
                                 <td>
                                     <div class="aksi">
+                                        <a class="btn btn-sm btn-soft" href="{{ route('admin.buku.barcode', [$buku, 'eksemplar' => $e->id, 'mode' => 'kecil']) }}"
+                                           target="_blank" rel="noopener" title="Cetak barcode kode {{ $e->kode }}">
+                                            @include('partials.icon', ['name' => 'printer', 'size' => 15]) Barcode
+                                        </a>
                                         @if ($e->status !== 'dipinjam')
                                             <form method="POST" action="{{ route('admin.eksemplar.update', $e) }}"
                                                   data-konfirmasi="{{ $e->status === 'nonaktif' ? 'Aktifkan kembali kode '.$e->kode.'?' : 'Nonaktifkan kode '.$e->kode.' (rusak/hilang)? Kode ini tidak akan dipinjamkan.' }}">
