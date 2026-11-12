@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#1e3a8a">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('judul', 'Beranda') — SPP-Ku</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📚</text></svg>">
+    <link rel="icon" type="image/png" href="{{ asset('logo_sppku.png') }}">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
 <body>
@@ -18,7 +18,9 @@
     <header class="topbar">
         <div class="topbar-inner">
             <a href="{{ route('home') }}" class="brand">
-                <span class="brand-dot">@include('partials.icon', ['name' => 'books', 'size' => 15])</span>
+                <span class="brand-dot">
+                    <img src="{{ asset('logo_sppku.png') }}" alt="Logo SPP-Ku" width="32">
+                </span>
                 SPP-Ku
             </a>
 

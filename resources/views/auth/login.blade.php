@@ -4,7 +4,9 @@
 
 @section('konten')
     <div class="login-card">
-        <div class="login-mark">@include('partials.icon', ['name' => 'books', 'size' => 26])</div>
+        <div class="login-mark">
+            <img src="{{ asset('logo_sppku.png') }}" alt="Logo SPP-Ku" width="32">
+        </div>
 
         <h1>Masuk ke SPP-Ku</h1>
         <p class="login-sub">Sistem Peminjaman &amp; Pengembalian Buku<br>{{ config('sppku.sekolah.perpustakaan') }}</p>

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="#172554">
     <title>@yield('judul', 'Dashboard') — SPP-Ku Admin</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📚</text></svg>">
+    <link rel="icon" type="image/png" href="{{ asset('logo_sppku.png') }}">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
 <body>
@@ -16,7 +16,9 @@
     <div class="sidebar-overlay" data-menu-tutup></div>
     <aside class="sidebar" id="menu-samping">
         <a href="{{ route('admin.dashboard') }}" class="brand">
-            <span class="brand-dot">@include('partials.icon', ['name' => 'books', 'size' => 15])</span>
+            <span class="brand-dot">
+                <img src="{{ asset('logo_sppku.png') }}" alt="Logo SPP-Ku" width="32">
+            </span>
             SPP-Ku <span style="font-weight:500;opacity:.6;font-size:12px">Admin</span>
         </a>
 
