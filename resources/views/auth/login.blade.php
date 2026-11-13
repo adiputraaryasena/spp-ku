@@ -17,7 +17,7 @@
             <div class="field">
                 <label for="kode">NISN</label>
                 <input id="kode" name="kode" type="text" value="{{ old('kode') }}" required autofocus
-                       autocomplete="username" placeholder="Contoh: 2024001"
+                       autocomplete="username" placeholder="Contoh: 0012345678"
                        @class(['input', 'is-error' => $errors->has('kode')])>
                 @error('kode') <p class="error">{{ $message }}</p> @enderror
             </div>
