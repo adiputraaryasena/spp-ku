@@ -15,7 +15,7 @@
             @csrf
 
             <div class="field">
-                <label for="kode">NIS siswa atau kode petugas</label>
+                <label for="kode">NISN</label>
                 <input id="kode" name="kode" type="text" value="{{ old('kode') }}" required autofocus
                        autocomplete="username" placeholder="Contoh: 2024001"
                        @class(['input', 'is-error' => $errors->has('kode')])>
